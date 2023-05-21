@@ -3,10 +3,10 @@
 -- Procedimental Language Structured Query Language
 -- En PLSQL se programan tres tipos de objetos o rutinas:
 -- -- Funciones: Tienen una lista de argumentos de entrada
--- -- y devuelven un valor. La ejecucion de una funcion es READONLY
+-- -- y devuelven un valor. La ejecución de una función es READONLY.
 -- -- Procedimientos: Tienen una lista de argumentos de entrada
--- -- y de salida y no devuelven ningún valor. La ejecucion de un
--- -- procedimiento no es READONLY, y se producen INSERT, DELETE UPDATE.
+-- -- y de salida y no devuelven ningún valor. La ejecución de un 
+-- -- procedimiento NO ES READONLY, y se producen INSERT, DELETE y UPDATE.
 -- -- Disparadores: No tienen lista de argumentos, no devuelven
 -- -- ningún valor y se disparan automáticamente cuando se
 -- -- ejecuta alguna operación DML (INSERT, DELETE, UPDATE)
@@ -236,7 +236,7 @@ SET DELIMITER ;
 SET DELIMITER //
 DROP FUNCTION IF EXISTS energy_class//
 CREATE FUNCTION energy_class(par_recipe_id INT)
-RETURNS VARCHAR(20)
+RETURNS VARCHAR(9)
 BEGIN
 	DECLARE x INT;
 	SET x=total_calories(par_recipe_id);
@@ -267,7 +267,8 @@ SELECT *, energy_class(recipe_id)
 FROM recipes;
 
 -- 16. Función que devuelve verdadero si con cierta cantidad euros
--- tenemos suficiente dinero para un número de raciones de una receta.
+-- tenemos suficiente dinero para un número de raciones de una receta
+-- y falso en caso contrario.
 -- Recibe como parámetros:
 -- -- Cantidad de euros
 -- -- Identificador de la receta
@@ -345,5 +346,6 @@ DROP FUNCTION IF EXISTS enough_money//
 CREATE FUNCTION enough_money(par_eu FLOAT, par_recipe_id INT, par_n INT)
 RETURNS BOOLEAN
 BEGIN
-	RETURN par_eu >= cost(par_recipe_id)*par_n;
+	RETURN par_eu >= cost(par_recipe_id) * par_n;
 END//
+DELIMITER ;
